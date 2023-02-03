@@ -143,3 +143,4 @@ Route::post('/api/webhooks', function (Request $request) {
 });
 
 Route::get('jotform-data', [WebhookController::class, 'handleJotForm']);
+Route::post('jotform-data', [WebhookController::class, 'handleJotForm']);
