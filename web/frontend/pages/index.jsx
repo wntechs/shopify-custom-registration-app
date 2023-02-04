@@ -17,9 +17,9 @@ import { ProductsCard } from "../components";
 export default function HomePage() {
   return (
     <Page narrowWidth>
-      <TitleBar title="App name" primaryAction={null} />
+      <TitleBar title="Custom Registration" primaryAction={null} />
       <Layout>
-        <Layout.Section>
+        {/*<Layout.Section>
           <Card sectioned>
             <Stack
               wrap={false}
@@ -76,7 +76,7 @@ export default function HomePage() {
               </Stack.Item>
             </Stack>
           </Card>
-        </Layout.Section>
+        </Layout.Section>*/}
         <Layout.Section>
           <ProductsCard />
         </Layout.Section>
