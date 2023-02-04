@@ -6,6 +6,7 @@
     "license": "UNLICENSED",
     "require": {
         "php": "^7.4 || ^8.0 || ^8.1",
+        "ext-json": "*",
         "ext-xml": "*",
         "ext-zip": "*",
         "doctrine/dbal": "^3.1",
@@ -14,9 +15,10 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
+        "propaganistas/laravel-phone": "4.4.5",
         "shopify/shopify-api": "^4.0",
-        "squizlabs/php_codesniffer": "^3.6",
-        "ext-json": "*"
+        "spatie/laravel-rate-limited-job-middleware": "^2.2",
+        "squizlabs/php_codesniffer": "^3.6"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

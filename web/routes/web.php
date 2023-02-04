@@ -89,7 +89,7 @@ Route::get('/api/products/count', function (Request $request) {
     $session = $request->get('shopifySession'); // Provided by the shopify.auth middleware, guaranteed to be active
 
     $client = new Rest($session->getShop(), $session->getAccessToken());
-    $result = $client->get('products/count');
+    $result = $client->get('customers/count');
 
     return response($result->getDecodedBody());
 })->middleware('shopify.auth');

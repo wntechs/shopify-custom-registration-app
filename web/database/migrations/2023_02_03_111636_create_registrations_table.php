@@ -19,7 +19,7 @@ class CreateRegistrationsTable extends Migration
             $table->string('last_name', 50)->nullable();
             $table->string('email')->unique();
             $table->string('phone', 20)->nullable();
-            $table->string('company',100)->nullable();
+            $table->string('company', 100)->nullable();
             $table->string('address_1');
             $table->string('address_2')->nullable();
             $table->string('city', 50);

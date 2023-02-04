@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
-
-
+use App\Jobs\ProcessRegistration;
 use App\Models\Registration;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Shopify\Utils;
 
 class WebhookController
 {
-    public function handleJotForm(Request $request){
+    public function handleJotForm(Request $request)
+    {
+       // Log::debug('webhook', $request->all());
+        $data = json_decode($request->rawRequest, true);
+        $shop = $data['q12_shop'];
 
-        $form_id = $request->formID;
-        if($form_id == '230332414469048'){
-            $data = json_decode($request->rawRequest, true);
+        //we might omit shop validation checking in case we still want to store registration in our db
+        $session = Utils::loadOfflineSession('genx-institute.myshopify.com');
+        //print_r([$session->shop, $shop]);die;
+        if ($session->shop == $shop) {
             $address = $data['q11_address'];
             $formData = [
+                'shop' => $shop,
                 'first_name' => $data['q3_name']['first'],
                 'last_name' => $data['q3_name']['last'],
                 'email' => $data['q9_email'],
@@ -30,18 +35,19 @@ class WebhookController
                 'country' => $address['country'],
             ];
 
-            if(!empty($formData['email'])){
+            if (!empty($formData['email'])) {
                 $registration = Registration::where('email', $formData['email'])->first();
-                if($registration == null){
-                    Registration::create($formData);
-                }else{
+                if ($registration == null) {
+                    $registration = Registration::create($formData);
+                    ProcessRegistration::dispatch($registration);
+                } else {
                     unset($formData['email']);
                     $registration->fill($formData);
                     $registration->save();
                 }
             }
         }
-        return response('success');
 
+        return response('success');
     }
 }
