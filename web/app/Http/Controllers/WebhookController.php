@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessRegistration;
+use App\Lib\DbSessionStorage;
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Shopify\Auth\OAuth;
 use Shopify\Utils;
 
 class WebhookController
@@ -16,7 +18,7 @@ class WebhookController
         $shop = $data['q12_shop'];
 
         //we might omit shop validation checking in case we still want to store registration in our db
-        $session = Utils::loadOfflineSession('genx-institute.myshopify.com');
+        $session = ( new DbSessionStorage())->loadSession(OAuth::getOfflineSessionId($shop));
         //print_r([$session->shop, $shop]);die;
         if ($session->shop == $shop) {
             $address = $data['q11_address'];
